@@ -1,17 +1,22 @@
 package com.kairosapp.albumsleboncoin.ui.viewmodel
 
 import android.util.Log
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kairosapp.albumsleboncoin.model.Album
+import com.kairosapp.albumsleboncoin.repository.AlbumRepository
 import com.kairosapp.albumsleboncoin.repository.AlbumRepositoryImpl
 import com.kairosapp.albumsleboncoin.util.launchCoroutine
 
-class AlbumListViewModelImpl : ViewModel() {
-    val state = MutableLiveData<State>()
+class AlbumListViewModelImpl @ViewModelInject constructor(
+    private val albumRepository: AlbumRepository,
+    @Assisted private val savedStateHandle: SavedStateHandle) : ViewModel(), AlbumListViewModel {
 
-    private val albumRepository = AlbumRepositoryImpl()
+    val state = MutableLiveData<State>()
 
     init {
         state.value = State.NotStarted

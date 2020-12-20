@@ -2,7 +2,6 @@ package com.kairosapp.albumsleboncoin.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -10,9 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kairosapp.albumsleboncoin.R
 import com.kairosapp.albumsleboncoin.ui.recycler.AlbumAdapter
 import com.kairosapp.albumsleboncoin.ui.viewmodel.AlbumListViewModelImpl
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val albumListViewModel: AlbumListViewModelImpl by lazy {
@@ -26,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         album_recycler_view.layoutManager = LinearLayoutManager(this)
 
         albumListViewModel.state.observe(this, Observer { state ->
-            Log.d("MainActivity", "onCreate: $state")
             when (state) {
                 AlbumListViewModelImpl.State.Loading -> {
                     album_recycler_view.visibility = View.GONE
@@ -44,5 +44,4 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-
 }
