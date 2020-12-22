@@ -1,18 +1,26 @@
 package com.kairosapp.albumsleboncoin.injection
 
+import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kairosapp.albumsleboncoin.repository.AlbumRepository
 import com.kairosapp.albumsleboncoin.repository.AlbumRepositoryImpl
 import com.kairosapp.albumsleboncoin.service.LeboncoinService
+import com.squareup.picasso.OkHttp3Downloader
+import com.squareup.picasso.Picasso
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import javax.inject.Singleton
+
+private const val PICASSO_DISK_CACHE_SIZE_LIMIT = 25L * 1024L * 1024L // 25mo
 
 @Module
 @InstallIn(ApplicationComponent::class)
@@ -45,4 +53,16 @@ class ApplicationModule {
     @Singleton
     fun provideGson(): Gson = GsonBuilder()
         .create()
+
+    @Provides
+    @Singleton
+    fun providePicasso(@ApplicationContext context: Context): Picasso = Picasso.Builder(context)
+        .downloader(
+            OkHttp3Downloader(
+                OkHttpClient.Builder()
+                    .cache(Cache(File(context.cacheDir, "images"), PICASSO_DISK_CACHE_SIZE_LIMIT))
+                    .build()
+            )
+        )
+        .build()
 }

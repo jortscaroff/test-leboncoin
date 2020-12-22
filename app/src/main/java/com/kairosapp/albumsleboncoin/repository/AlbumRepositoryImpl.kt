@@ -7,15 +7,15 @@ import javax.inject.Inject
 class AlbumRepositoryImpl @Inject constructor(private val leboncoinService: LeboncoinService) : AlbumRepository {
 
     override suspend fun getAlbums(): List<Album> {
-        val albumsList: MutableList<Album> = mutableListOf()
+        val albumList: MutableList<Album> = mutableListOf()
 
         val apiAlbums = leboncoinService.getAlbums()
 
         apiAlbums.forEach { album ->
-            albumsList.add(album.toModel())
+            albumList.add(album.toModel())
         }
 
-        return albumsList
+        return albumList
     }
 
 

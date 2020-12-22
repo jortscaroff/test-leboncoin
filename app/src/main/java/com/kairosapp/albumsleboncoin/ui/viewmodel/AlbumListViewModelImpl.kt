@@ -16,7 +16,7 @@ class AlbumListViewModelImpl @ViewModelInject constructor(
     private val albumRepository: AlbumRepository,
     @Assisted private val savedStateHandle: SavedStateHandle) : ViewModel(), AlbumListViewModel {
 
-    val state = MutableLiveData<State>()
+    var state = MutableLiveData<State>()
 
     init {
         state.value = State.NotStarted
