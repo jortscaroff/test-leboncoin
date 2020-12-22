@@ -1,0 +1,42 @@
+package com.kairosapp.albumsleboncoin
+
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.Rule
+import org.junit.rules.TestRule
+import org.junit.runner.Description
+import org.junit.runner.RunWith
+import org.junit.runners.model.Statement
+import org.mockito.junit.MockitoJUnitRunner
+
+@RunWith(value = MockitoJUnitRunner::class)
+abstract class BaseTest {
+    protected val testDispatcher = TestCoroutineDispatcher()
+
+    @get:Rule
+    val coroutinesUIThreadOverrideRule: TestRule = CoroutinesUIThreadOverrideRule(testDispatcher)
+
+// ----------------------------------->
+
+    fun runBlockingTest(testBody: suspend TestCoroutineScope.() -> Unit) {
+        kotlinx.coroutines.test.runBlockingTest(testDispatcher, testBody)
+    }
+}
+
+class CoroutinesUIThreadOverrideRule(private val dispatcher: CoroutineDispatcher) : TestRule {
+
+    override fun apply(base: Statement, description: Description?): Statement = object : Statement() {
+        override fun evaluate() {
+            Dispatchers.setMain(dispatcher)
+
+            base.evaluate()
+
+            Dispatchers.resetMain()
+        }
+    }
+
+}
