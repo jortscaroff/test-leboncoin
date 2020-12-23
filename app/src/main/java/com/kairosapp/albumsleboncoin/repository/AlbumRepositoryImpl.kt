@@ -17,6 +17,5 @@ class AlbumRepositoryImpl @Inject constructor(private val leboncoinService: Lebo
 
         return albumList
     }
-
-
+    
 }

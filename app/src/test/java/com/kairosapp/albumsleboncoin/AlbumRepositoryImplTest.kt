@@ -15,7 +15,7 @@ import org.mockito.Mockito
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest: BaseTest() {
+class AlbumRepositoryImplTest: BaseTest() {
 
     @Test
     fun testThatGetAlbumsReturnsTheCorrectList() = runBlockingTest {
@@ -23,7 +23,7 @@ class ExampleUnitTest: BaseTest() {
 
         val albumListResult = albumRepository.getAlbums()
 
-        val expectedResult = listOf(album1.toModel(), album2.toModel())
+        val expectedResult = listOf(albumApi1.toModel(), albumApi2.toModel())
         assertEquals(expectedResult, albumListResult)
     }
 
@@ -41,7 +41,7 @@ class ExampleUnitTest: BaseTest() {
     fun createTestData(): Pair<AlbumRepositoryImpl, LeboncoinService> = runBlocking{
         val leboncoinServiceMock = Mockito.mock(LeboncoinService::class.java)
 
-        val albumApiList = listOf<AlbumAPI>(album1,album2)
+        val albumApiList = listOf(albumApi1,albumApi2)
 
         Mockito.`when`(leboncoinServiceMock.getAlbums()).thenReturn(albumApiList)
 
@@ -49,8 +49,7 @@ class ExampleUnitTest: BaseTest() {
     }
 
     companion object {
-        val album1 = AlbumAPI(1,1, "Title 1", "url1.com", "thumbnailurl1.com")
-        val album2 = AlbumAPI(1,2, "Title 2", "url2.com", "thumbnailurl2.com")
-
+        val albumApi1 = AlbumAPI(1,1, "Title 1", "url1.com", "thumbnailurl1.com")
+        val albumApi2 = AlbumAPI(1,2, "Title 2", "url2.com", "thumbnailurl2.com")
     }
 }

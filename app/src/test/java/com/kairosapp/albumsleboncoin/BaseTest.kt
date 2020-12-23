@@ -1,5 +1,6 @@
 package com.kairosapp.albumsleboncoin
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -19,6 +20,9 @@ abstract class BaseTest {
 
     @get:Rule
     val coroutinesUIThreadOverrideRule: TestRule = CoroutinesUIThreadOverrideRule(testDispatcher)
+
+    @get:Rule
+    var instantExecutorRule = InstantTaskExecutorRule()
 
 // ----------------------------------->
 
