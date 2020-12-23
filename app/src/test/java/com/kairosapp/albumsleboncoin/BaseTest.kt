@@ -3,6 +3,7 @@ package com.kairosapp.albumsleboncoin
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
@@ -16,8 +17,10 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(value = MockitoJUnitRunner::class)
 abstract class BaseTest {
+    @ExperimentalCoroutinesApi
     protected val testDispatcher = TestCoroutineDispatcher()
 
+    @ExperimentalCoroutinesApi
     @get:Rule
     val coroutinesUIThreadOverrideRule: TestRule = CoroutinesUIThreadOverrideRule(testDispatcher)
 
@@ -26,6 +29,7 @@ abstract class BaseTest {
 
 // ----------------------------------->
 
+    @ExperimentalCoroutinesApi
     fun runBlockingTest(testBody: suspend TestCoroutineScope.() -> Unit) {
         kotlinx.coroutines.test.runBlockingTest(testDispatcher, testBody)
     }
@@ -33,6 +37,7 @@ abstract class BaseTest {
 
 class CoroutinesUIThreadOverrideRule(private val dispatcher: CoroutineDispatcher) : TestRule {
 
+    @ExperimentalCoroutinesApi
     override fun apply(base: Statement, description: Description?): Statement = object : Statement() {
         override fun evaluate() {
             Dispatchers.setMain(dispatcher)

@@ -3,7 +3,6 @@ package com.kairosapp.albumsleboncoin.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kairosapp.albumsleboncoin.R
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         album_recycler_view.layoutManager = LinearLayoutManager(this)
 
-        albumListViewModel.state.observe(this, Observer { state ->
+        albumListViewModel.state.observe(this, { state ->
             when (state) {
                 AlbumListViewModelImpl.State.Loading -> {
                     album_recycler_view.visibility = View.GONE

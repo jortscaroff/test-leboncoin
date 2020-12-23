@@ -1,16 +1,12 @@
 package com.kairosapp.albumsleboncoin
 
-import androidx.lifecycle.Observer
 import com.kairosapp.albumsleboncoin.model.Album
 import com.kairosapp.albumsleboncoin.repository.AlbumRepository
-import com.kairosapp.albumsleboncoin.ui.viewmodel.AlbumListViewModel
 import com.kairosapp.albumsleboncoin.ui.viewmodel.AlbumListViewModelImpl
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentCaptor
 import org.mockito.Mockito
-import java.util.*
 
 class AlbumListViewModelImplTest : BaseTest() {
 
@@ -57,8 +53,4 @@ class AlbumListViewModelImplTest : BaseTest() {
         val album1 = Album(1, "Title 1", "url1.com", "thumbnailurl1.com")
         val album2 = Album(2, "Title 2", "url2.com", "thumbnailurl2.com")
     }
-
-    private inline fun <reified T> mock(): T = Mockito.mock(T::class.java)
-
-    private inline fun <reified T : Any> argumentCaptor() = ArgumentCaptor.forClass(T::class.java)
 }

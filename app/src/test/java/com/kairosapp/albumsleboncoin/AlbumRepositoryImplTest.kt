@@ -4,9 +4,9 @@ import com.kairosapp.albumsleboncoin.model.Album
 import com.kairosapp.albumsleboncoin.model.AlbumAPI
 import com.kairosapp.albumsleboncoin.repository.AlbumRepositoryImpl
 import com.kairosapp.albumsleboncoin.service.LeboncoinService
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
-
 import org.junit.Assert.*
 import org.mockito.Mockito
 
@@ -17,6 +17,7 @@ import org.mockito.Mockito
  */
 class AlbumRepositoryImplTest: BaseTest() {
 
+    @ExperimentalCoroutinesApi
     @Test
     fun testThatGetAlbumsReturnsTheCorrectList() = runBlockingTest {
         val (albumRepository) = createTestData()
@@ -27,6 +28,7 @@ class AlbumRepositoryImplTest: BaseTest() {
         assertEquals(expectedResult, albumListResult)
     }
 
+    @ExperimentalCoroutinesApi
     @Test
     fun testThatGetAlbumsReturnsTheCorrectListWhenAlbumListIsEmpty() = runBlockingTest {
         val (albumRepository, leboncoinService) = createTestData()
@@ -38,7 +40,7 @@ class AlbumRepositoryImplTest: BaseTest() {
         assertEquals(expectedResult, albumListResult)
     }
 
-    fun createTestData(): Pair<AlbumRepositoryImpl, LeboncoinService> = runBlocking{
+    private fun createTestData(): Pair<AlbumRepositoryImpl, LeboncoinService> = runBlocking{
         val leboncoinServiceMock = Mockito.mock(LeboncoinService::class.java)
 
         val albumApiList = listOf(albumApi1,albumApi2)
